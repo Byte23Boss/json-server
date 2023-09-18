@@ -1,0 +1,53 @@
+import random
+import json
+from datetime import datetime, timedelta
+
+# Define lists for random data generation
+names = ["John", "Jane", "Robert", "Emily", "Michael", "Sarah", "David", "Olivia", "James", "Sophia"]
+surnames = ["Smith", "Johnson", "Brown", "Williams", "Jones", "Davis", "Miller", "Wilson", "Moore", "Taylor"]
+diagnoses = ["DiseaseA", "DiseaseB", "DiseaseC", "DiseaseD", "DiseaseE"]
+nationalities = ["USA", "Canada", "UK", "Australia", "Germany", "France", "Spain", "Japan", "India", "Brazil"]
+
+# Generate 141 patient records
+patient_records = []
+
+for i in range(1, 142):
+    name = random.choice(names) + str(i)
+    surname = random.choice(surnames) + str(i)
+    diagnose_code = random.choice(diagnoses) + str(i)
+    email = f"patient{i}@example.com"
+    gender = random.choice(["Male", "Female"])
+    phone = f"+1{random.randint(1000000000, 9999999999)}"
+    birth_date = (datetime.now() - timedelta(days=random.randint(365 * 18, 365 * 80))).strftime("%Y-%m-%d")
+    icd9 = "ICD9-" + str(i)
+    nationality = random.choice(nationalities) + str(i)
+    address = f"Address{i}"
+    date_joined = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+    sickness_id = f"SicknessId-{i}"
+
+    patient_data = {
+        "Name": name,
+        "Surname": surname,
+        "DiagnoseCode": diagnose_code,
+        "Email": email,
+        "Gender": gender,
+        "Phone": phone,
+        "BirthDate": birth_date,
+        "ICD9": icd9,
+        "Nationality": nationality,
+        "Address": address,
+        "DateJoined": date_joined,
+        "SicknessId": sickness_id
+    }
+
+    patient_records.append(patient_data)
+
+# Print the generated patient records
+for record in patient_records:
+    for key, value in record.items():
+        print(f"{key}: {value}")
+    print("\n")
+
+json_data = json.dumps(patient_records)
+with open("patient_records.json", "w") as json_file:
+    json_file.write(json_data)
